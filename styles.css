@@ -34,8 +34,12 @@ header{
   border-bottom:1px solid var(--line)
 }
 .nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:15px 0}
-.brand{font-family:'Fraunces',serif;font-size:22px;font-weight:600;line-height:1.2}
-.brand span{display:block;margin-top:3px;font-family:Inter,Arial,sans-serif;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+/* Бренд «СИЛА ЭНЕРГИИ»: знак Феникса + название текстом. У PNG знака прозрачные поля по бокам, отрицательные отступы их компенсируют */
+.brand{display:flex;align-items:center;gap:8px;flex:none;line-height:1.2}
+.brand-mark{display:block;width:48px;height:48px;margin:0 -6px 0 -12px;flex:none}
+.brand-text{display:flex;flex-direction:column}
+.brand-name{font-family:'Fraunces',serif;font-size:20px;font-weight:600;letter-spacing:.05em;color:var(--accent);white-space:nowrap}
+.brand-person{margin-top:2px;font-size:12px;font-weight:600;letter-spacing:.02em;color:color-mix(in srgb, var(--accent2) 60%, var(--ink));white-space:nowrap}
 nav{display:flex;gap:18px;flex-wrap:wrap;font-size:14px}
 .btn{
   display:inline-block;padding:12px 18px;border-radius:999px;
@@ -208,6 +212,10 @@ footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-s
 /* Полный футер с контактами и дисклеймером */
 footer .foot-links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
 footer .disclaimer{max-width:760px;margin-bottom:14px;line-height:1.5}
+/* Квадратный логотип в подвале: у PNG пустые поля (≈22% слева, ≈27% снизу) — выравниваем по видимой части, не обрезая файл */
+.foot-grid{display:grid;grid-template-columns:260px 1fr;gap:40px;align-items:start}
+.foot-logo{display:block;width:260px;height:auto;margin:-10px 0 0 -57px}
+.foot-main{min-width:0}
 
 /* Реальные отзывы получены 17.09.2026 — .proof-slot больше не заглушка */
 .proof-slot.filled{
@@ -393,6 +401,11 @@ footer .disclaimer{max-width:760px;margin-bottom:14px;line-height:1.5}
     padding:12px 18px 18px
   }
   header.nav-open nav{display:flex}
+  .nav{gap:12px}
+  .brand-mark{width:38px;height:38px;margin:0 -5px 0 -10px}
+  .brand-name{font-size:17px}
+  .foot-grid{grid-template-columns:1fr;gap:0}
+  .foot-logo{width:200px;margin:-8px auto -46px}
   .grid-3,.grid-2,.route,.route.cols-4,.split,.hero-split{grid-template-columns:1fr}
   .list-clean.cols-2{column-count:1}
   .hero{padding-top:58px}
@@ -454,3 +467,15 @@ footer .disclaimer{max-width:760px;margin-bottom:14px;line-height:1.5}
 .photo-band.landscape-strong .band-overlay{background:linear-gradient(to top, rgba(23,79,59,.72), transparent 65%)}
 .photo-band.landscape-strong .band-overlay p{max-width:620px;font-weight:600;text-shadow:0 2px 12px rgba(0,0,0,.2)}
 @media(max-width:850px){ .photo-band.landscape-strong{height:280px} }
+
+/* Очень узкие экраны: в шапке остаётся только знак и «СИЛА ЭНЕРГИИ» */
+@media(max-width:420px){
+  .brand-person{display:none}
+  .nav{gap:8px}
+  .brand-name{font-size:15px;letter-spacing:.03em}
+  .nav .btn{padding:8px 12px;font-size:13px;text-align:center}
+  .burger{padding:7px 10px}
+}
+@media(max-width:359px){
+  .brand-name{white-space:normal;line-height:1.1;max-width:80px}
+}
