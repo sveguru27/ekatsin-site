@@ -3,6 +3,30 @@
   const c = window.ENERGIA;
   if (!c) return;
   const el = id => document.getElementById(id);
+  const pageUrl = 'https://ekatsin.ru/energia/';
+  const shareText = 'Екатерина Сенотрусова · «Энергия избранной»\nТри практики после встречи: Большой энергетический сброс, Калибровка биополя и «Крылья».';
+  const shareUrl = new URL('https://t.me/share/url');
+  shareUrl.search = new URLSearchParams({ url: pageUrl, text: shareText }).toString();
+  document.querySelectorAll('[data-share]').forEach(a => { a.href = shareUrl.href; });
+  document.querySelectorAll('[data-copy]').forEach(button => {
+    button.addEventListener('click', async () => {
+      const block = button.closest('[data-save]');
+      const status = block.querySelector('[data-copy-status]');
+      const fallback = block.querySelector('[data-copy-fallback]');
+      status.textContent = '';
+      fallback.hidden = true;
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+        await navigator.clipboard.writeText(pageUrl);
+        status.textContent = 'Ссылка скопирована';
+      } catch {
+        fallback.hidden = false;
+        const input = fallback.querySelector('input');
+        input.focus();
+        input.select();
+      }
+    });
+  });
   const safe = value => {
     if (typeof value !== 'string' || !value.trim()) return '';
     try { const u = new URL(value, location.href); return ['http:', 'https:', 'file:'].includes(u.protocol) ? value : ''; } catch { return ''; }
